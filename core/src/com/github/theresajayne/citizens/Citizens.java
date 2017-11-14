@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.Random;
+
 public class Citizens extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
+	int count = 0;
 	
 	@Override
 	public void create () {
@@ -18,10 +21,18 @@ public class Citizens extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Random rand = new Random();
+		if(count >= 60)
+		{
+			Gdx.gl.glClearColor(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 1);
+			count = 0;
+		}
+		count++;
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		int x = (Gdx.graphics.getWidth()/2) - (img.getWidth()/2);
+		int y = (Gdx.graphics.getHeight()/2) - (img.getHeight()/2);
 		batch.begin();
-		batch.draw(img, 0, 0);
+		batch.draw(img, x, y);
 		batch.end();
 	}
 	
