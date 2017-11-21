@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.IntAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
@@ -24,9 +25,14 @@ public class Citizens extends ApplicationAdapter
     Environment environment;
     CameraInputController camController;
     Texture texture;
+    Material material;
 
     @Override
     public void create() {
+        FileHandle imageFileHandle = Gdx.files.internal("dirt.png");
+        texture = new Texture(imageFileHandle);
+        material = new Material(TextureAttribute.createDiffuse(texture),
+                new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
         environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight,0.4f,0.4f,0.4f,1f));
         environment.add(new DirectionalLight().set(0.8f,0.8f,0.8f,-1f,-0.8f,-0.2f));
@@ -42,8 +48,7 @@ public class Citizens extends ApplicationAdapter
         ModelBuilder modelBuilder = new ModelBuilder();
 //		model = modelBuilder.createBox(5f,5f,5f,new Material(ColorAttribute.createDiffuse(Color.GREEN)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
         instance = processMap();//new ModelInstance(model);
-        FileHandle imageFileHandle = Gdx.files.internal("dirt.png");
-        texture = new Texture(imageFileHandle);
+
     }
 
     private ModelInstance processMap()
@@ -62,8 +67,7 @@ public class Citizens extends ApplicationAdapter
                         x,  world.getHeightAt(x, y),y,
                         x,  world.getHeightAt(x, y + 1),y + 1,
                         0, 1, 0,
-                        GL20.GL_LINES,
-                        new Material(ColorAttribute.createDiffuse(Color.YELLOW), new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)), VertexAttributes.Usage.Position | VertexAttributes.Usage.ColorPacked | VertexAttributes.Usage.TextureCoordinates| VertexAttributes.Usage.Normal );
+                        GL20.GL_TRIANGLES,material, VertexAttributes.Usage.Position | VertexAttributes.Usage.ColorPacked | VertexAttributes.Usage.TextureCoordinates| VertexAttributes.Usage.Normal );
 
                 tempModel.nodes.addAll(model.nodes);
             }
