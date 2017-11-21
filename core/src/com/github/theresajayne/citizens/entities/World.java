@@ -12,7 +12,10 @@ public class World
             {
                 this.world[x][y] = 5;
             }
-            this.world[4][4] = 6;
+        this.world[4][4] = 6;
+        this.world[2][3] = 4;
+        this.world[6][8] = 6;
+
     }
 
     public int getHeightAt(int x, int y)
