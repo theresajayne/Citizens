@@ -12,7 +12,15 @@ public class World
             {
                 this.world[x][y] = 5;
             }
-        this.world[4][4] = 6;
+        this.world[4][4] = 7;
+        this.world[3][3] = 6;
+        this.world[3][4] = 6;
+        this.world[3][5] = 6;
+        this.world[4][3] = 6;
+        this.world[4][5] = 6;
+        this.world[5][3] = 6;
+        this.world[5][4] = 6;
+        this.world[5][5] = 6;
         this.world[2][3] = 4;
         this.world[6][8] = 6;
 
